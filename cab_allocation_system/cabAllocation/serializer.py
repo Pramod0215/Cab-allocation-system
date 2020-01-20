@@ -21,14 +21,14 @@ class RideSerializer(serializers.ModelSerializer):
     # driver = DriverModel()
     class Meta:
         model = RideDetails
-        fields = ("id", "user", "driver", "ride_field")
+        fields = ("id", "user", "driver", "ride_status")
 
 class RideCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = RideDetails
-        fields = ("user","ride_field",)
+        fields = ("user","ride_status",)
 
 class RideUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = RideDetails
-        fields = ("driver","ride_field",)
+        fields = ("driver","ride_status",)
