@@ -13,7 +13,7 @@ class DriverAdmin(admin.ModelAdmin):
 
 """ create user Rider Admin """
 class RideAdmin(admin.ModelAdmin):
-    list_display = ('user','driver','ride_field',)
+    list_display = ('user','driver','ride_status',)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Driver, DriverAdmin)
