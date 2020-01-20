@@ -6,7 +6,7 @@ from .models import *
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from .serializer import UserSerializers, DriverSerializers, RideDetailsSerializers
+from .serializer import UserSerializers, DriverSerializers,
 
 
 # def index(request):
@@ -15,13 +15,7 @@ from .serializer import UserSerializers, DriverSerializers, RideDetailsSerialize
 # Create your views here.
 
 class UserViewSet(viewsets.ViewSet):
-    """
-    Example empty viewset demonstrating the standard
-    actions that will be handled by a router class.
 
-    If you're using format suffixes, make sure to also include
-    the `format=None` keyword argument for each action.
-    """
 
     def list(self, request):
         queryset = User.objects.all()
@@ -52,7 +46,7 @@ class UserViewSet(viewsets.ViewSet):
 class DriverViewSet(viewsets.ViewSet):
     """
     Example empty viewset demonstrating the standard
-    actions that will be handled by a router class.
+    actions that will  handled by a router class.
 
     If you're using format suffixes, make sure to also include
     the `format=None` keyword argument for each action.
@@ -109,12 +103,14 @@ class RiderViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
 
     def retrieve(self, request, pk=None):
-        queryset = Driver.objects.all()
+        queryset = RideDetails.objects.all()
         rider = get_object_or_404(queryset, pk=pk)
         serializer = RideDetailsSerializers(rider)
         return Response(serializer.data)
 
-    def update(self, request, pk=None):
+
+def update(self, request, pk=None):
         pass
