@@ -81,7 +81,7 @@ class RiderViewSet(viewsets.ViewSet):
         if driver is not None:
             queryset = queryset.filter(driver__drivername=driver)
         if status is not None:
-            queryset = queryset.filter(ride_field=status)
+            queryset = queryset.filter(ride_status=status)
         serializer = RideSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -93,8 +93,8 @@ class RiderViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             print("Except block")
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        requested = RideDetails.objects.filter(user=user).filter(ride_field='re').count()
-        accepted = RideDetails.objects.filter(user=user).filter(ride_field='ac').count()
+        requested = RideDetails.objects.filter(user=user).filter(ride_status='re').count()
+        accepted = RideDetails.objects.filter(user=user).filter(ride_status='ac').count()
         # print("Queryset", len(queryset))
         if requested > 0:
             return Response("Already Requested", status=status.HTTP_226_IM_USED)
