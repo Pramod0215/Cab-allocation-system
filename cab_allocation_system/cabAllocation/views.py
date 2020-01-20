@@ -1,32 +1,26 @@
 from django.shortcuts import render
-from django.http import HttpRequest
-from rest_framework.generics import get_object_or_404
+from django.shortcuts import get_object_or_404
 
-from .models import *
-from rest_framework import viewsets, status
+from .serializer import UserSerializers, DriverSerializers, RideSerializer, RideCreateSerializer, RideUpdateSerializer
+from .models import User, Driver, RideDetails
+
+from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework import status
 
-from .serializer import UserSerializers, DriverSerializers,
-
-
-# def index(request):
-#     return HttpRequest('cab')
-
-# Create your views here.
 
 class UserViewSet(viewsets.ViewSet):
-
-
+    """
+    Listing all the users
+    """
     def list(self, request):
         queryset = User.objects.all()
         serializer = UserSerializers(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request):
-        serializer = UserSerializers(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    """
+    To retrieve a particular user
+    """
 
     def retrieve(self, request, pk=None):
         queryset = User.objects.all()
@@ -34,34 +28,28 @@ class UserViewSet(viewsets.ViewSet):
         serializer = UserSerializers(user)
         return Response(serializer.data)
 
-    def update(self, request, pk=None):
-        pass
+    """
+    To create a new user
+    """
+    def create(self, request):
+        serializer = UserSerializers(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED )
 
-    def partial_update(self, request, pk=None):
-        pass
-
-    def destroy(self, request, pk=None):
-        pass
 
 class DriverViewSet(viewsets.ViewSet):
     """
-    Example empty viewset demonstrating the standard
-    actions that will  handled by a router class.
-
-    If you're using format suffixes, make sure to also include
-    the `format=None` keyword argument for each action.
+    Listing all the drivers
     """
-
     def list(self, request):
         queryset = Driver.objects.all()
         serializer = DriverSerializers(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request):
-        serializer = DriverSerializers(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    """
+    To retrieve a particular driver
+    """
 
     def retrieve(self, request, pk=None):
         queryset = Driver.objects.all()
@@ -69,48 +57,67 @@ class DriverViewSet(viewsets.ViewSet):
         serializer = DriverSerializers(driver)
         return Response(serializer.data)
 
-    def update(self, request, pk=None):
-        pass
-
+    """
+    To create a new driver
+    """
+    def create(self, request):
+        serializer = DriverSerializers(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class RiderViewSet(viewsets.ViewSet):
     """
-    Example empty viewset demonstrating the standard
-    actions that will be handled by a router class.
-
-    If you're using format suffixes, make sure to also include
-    the `format=None` keyword argument for each action.
+    Listing all the ride lists
     """
-
     def list(self, request):
         queryset = RideDetails.objects.all()
-        user = request.GET.get('user',None)
+        user = request.GET.get('user', None)
         driver = request.GET.get('driver', None)
         status = request.GET.get('status', None)
         if user is not None:
-            queryset = queryset.filter(user__user_name = user)
+            queryset = queryset.filter(user__username=user)
         if driver is not None:
-            queryset = queryset.filter(driver__driver_name = driver)
+            queryset = queryset.filter(driver__drivername=driver)
         if status is not None:
             queryset = queryset.filter(ride_field=status)
-        serializer = RideDetailsSerializers(queryset, many=True)
+        serializer = RideSerializer(queryset, many=True)
         return Response(serializer.data)
-
 
     def create(self, request):
-        serializer = RideDetailsSerializers(data=request.data)
+        print("This is Create start", request.data)
+        try:
+            user = User.objects.get(id=request.data['user'])
+            print("Try block", user)
+        except User.DoesNotExist:
+            print("Except block")
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        requested = RideDetails.objects.filter(user=user).filter(ride_field='re').count()
+        accepted = RideDetails.objects.filter(user=user).filter(ride_field='ac').count()
+        # print("Queryset", len(queryset))
+        if requested > 0:
+            return Response("Already Requested", status=status.HTTP_226_IM_USED)
+        if accepted > 0:
+            return Response("Ride is ongoing", status=status.HTTP_403_FORBIDDEN)
+        serializer = RideCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
 
-    def retrieve(self, request, pk=None):
-        queryset = RideDetails.objects.all()
-        rider = get_object_or_404(queryset, pk=pk)
-        serializer = RideDetailsSerializers(rider)
-        return Response(serializer.data)
-
-
-def update(self, request, pk=None):
-        pass
+    def update(self, request, pk=None):
+        ride = RideDetails.objects.get(id=pk)
+        status = request.data.get('ride_field', None)
+        if status == 'ac' or status == 'dn':
+            #This ensures only valid states are set, invalid states are ignored
+            ride.status = status
+        if status == 'ac':
+            #Driver is set only while accepting the ride and at no other point
+            driver_name = request.data.get('driver', None)
+            if driver_name is not None:
+                try:
+                    driver = Driver.objects.get(drivername=driver_name)
+                    ride.driver = driver
+                except Driver.DoesNotExist:
+                    return Response("Driver doesnot exist", status=status.HTTP_400_BAD_REQUEST)
+        ride.save()

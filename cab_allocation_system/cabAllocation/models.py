@@ -24,7 +24,7 @@ Create rider , also show diver and user and his status
 class RideDetails(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver,on_delete=models.CASCADE)
-    ride_status = [
+    ride_field = [
         ("rq", "Requested"),
         ("ac", "Accepted"),
         ("dn", "Done"),
@@ -33,6 +33,6 @@ class RideDetails(models.Model):
 ]
     # creating a form
 
-    ride_field = models.CharField(choices=ride_status, default = 'Requested', max_length=2,help_text = 'this field is choice field where default is Requested' )
+    ride_status = models.CharField(choices=ride_field, default = 'Requested', max_length=2,help_text = 'this field is choice field where default is Requested' )
     def __str__(self):
         return str(self.user)
