@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from cabAllocation.views import UserViewSet,DriverViewSet,RiderViewSet
+from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('cabAllocation.urls'))
+    # path('',include('cabAllocation.urls'))
 ]
+
+
+router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'driver', DriverViewSet, basename='driver')
+router.register(r'rider', RiderViewSet, basename='rider')
+
+urlpatterns += router.urls

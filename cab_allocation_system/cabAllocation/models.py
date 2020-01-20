@@ -35,4 +35,4 @@ class RideDetails(models.Model):
 
     ride_field = models.CharField(choices=ride_status, default = 'Requested', max_length=2,help_text = 'this field is choice field where default is Requested' )
     def __str__(self):
-        return self.user
+        return str(self.user)
