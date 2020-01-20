@@ -76,6 +76,7 @@ class RiderViewSet(viewsets.ViewSet):
         user = request.GET.get('user', None)
         driver = request.GET.get('driver', None)
         status = request.GET.get('status', None)
+
         if user is not None:
             queryset = queryset.filter(user__username=user)
         if driver is not None:
