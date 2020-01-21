@@ -5,20 +5,18 @@ from .models import User, Driver, RideDetails
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', "username",)
+        fields = ('id', "user_name",)
 
 
 class DriverSerializers(serializers.ModelSerializer):
     class Meta:
         model = Driver
-        fields = ("id", "drivername",)
+        fields = ("id", "driver_name",)
 
 
 class RideSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    driver = serializers.ReadOnlyField(source="driver.drivername")
-    # user = UserModel()
-    # driver = DriverModel()
+    user = serializers.ReadOnlyField(source='user.user_name')
+    driver = serializers.ReadOnlyField(source="driver.driver_name")
     class Meta:
         model = RideDetails
         fields = ("id", "user", "driver",'ride_created', "ride_status")

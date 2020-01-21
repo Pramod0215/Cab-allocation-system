@@ -78,15 +78,18 @@ class RiderViewSet(viewsets.ViewSet):
         status = request.GET.get('status', None)
 
         if user is not None:
-            queryset = queryset.filter(user__username=user)
+            queryset = queryset.filter(user__user_name=user)
         if driver is not None:
-            queryset = queryset.filter(driver__drivername=driver)
+            queryset = queryset.filter(driver__driver_name=driver)
         if status is not None:
             queryset = queryset.filter(ride_status=status)
         serializer = RideSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
+        """
+        Listing all the ride create
+        """
         print("This is Create start", request.data)
         try:
             user = User.objects.get(id=request.data['user'])
@@ -107,6 +110,9 @@ class RiderViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk=None):
+        """
+        Listing all the ride update
+        """
         ride = RideDetails.objects.get(id=pk)
         status = request.data.get('ride_field', None)
         if status == 'ac' or status == 'dn':
@@ -117,7 +123,7 @@ class RiderViewSet(viewsets.ViewSet):
             driver_name = request.data.get('driver', None)
             if driver_name is not None:
                 try:
-                    driver = Driver.objects.get(drivername=driver_name)
+                    driver = Driver.objects.get(driver_name=driver_name)
                     ride.driver = driver
                 except Driver.DoesNotExist:
                     return Response("Driver doesnot exist", status=status.HTTP_400_BAD_REQUEST)

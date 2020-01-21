@@ -23,7 +23,7 @@ Create rider , also show diver and user and his status
 """
 class RideDetails(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver,on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver,on_delete=models.CASCADE,blank=True, null=True)
     ride_created = models.DateTimeField(auto_now_add=True)
     ride_field = [
 

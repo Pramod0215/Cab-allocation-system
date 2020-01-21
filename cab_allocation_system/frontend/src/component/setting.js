@@ -1,0 +1,93 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+class AddNewUser extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            user : [],
+            username : '',
+
+        }
+       this.addNewUser = this.addNewUser.bind(this) 
+    }
+    addNewUser(username){
+
+        console.log("username to add:", username);
+            axios.post('http://127.0.1:8000/users/',{
+            user_name:username});
+         
+    }
+    refresh() {
+        axios.get("http://127.0.0.1:8000/users/")
+        .then(res => {
+            console.log(res.data);
+          this.setState({ user: res.data });
+        });
+      }
+    componentDidMount(){
+        this.refresh();
+    }
+
+    
+    render() {
+      return (
+          <div>
+            <h1>Add New user </h1>
+            <input type='text' onChange={(event)=>this.setState({username:event.target.value})} value={this.state.username}/>
+            <button onClick={() => this.addNewUser(this.state.username)}>Add user</button>
+          </div>
+      )
+    }
+}
+
+class AddNewDriver extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            driver:[],
+            drivername:''
+        }
+        this.AddNewDriver = this.addNewDriver.bind(this)
+    }
+
+    addNewDriver(drivername){
+        console.log("driver",drivername)
+            axios.post('http://127.0.0.1:8000/driver/',{
+                driver_name:drivername})
+    }
+    refresh() {
+        axios.get("http://127.0.0.1:8000/driver/")
+        .then(res => {
+            console.log(res.data);
+          this.setState({ driver: res.data });
+        });
+      }
+    componentDidMount(){
+        this.refresh();
+    }
+
+    render() {
+      return (
+          <div>
+              <h1>Add New driver</h1>
+              <input type='text' onChange={(event)=>this.setState({drivername:event.target.value})} value={this.state.drivername}/>
+       
+              <button onClick={()=>this.AddNewDriver(this.state.drivername)} >Add Driver</button>
+          </div>
+      )
+    }
+}
+
+
+class Setting extends Component {
+    render() {
+      return (
+          <div>
+              <AddNewUser/>
+              <AddNewDriver/>
+          </div>
+      )
+    }
+}
+
+export default Setting;
