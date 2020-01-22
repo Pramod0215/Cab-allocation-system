@@ -1,13 +1,12 @@
 
 # Cab Allocation System
-Real time rides can be requested by customers on the system,
-which can be accepted by available drivers (who don’t have an ongoing trip). Whichever
-driver picks up gets to serve the user. Ride is completed after the customer ends it.
+ A User Interaction is designed where Customers are provided with a feature to book and end the rides on this service and Drivers that are not involved in any ongoing ride are provided with a choice to accept the Customer’s ride or not.
 
 ### Further explanation and assumptions:
-1. Each customer can request only one ride at a time.
-2. Each driver can accept / serve only one ride at a time.
-3. Every ride has 3 status - requested, accepted & done.
+1. Request to make a ride can only be done one at a time by the Customer
+2. Authority to Accept or serve the Customer’s Request is enabled by the Driver. 
+3. Customer is also provided an option to end the ongoing ride.
+4. The Status of every ride can be identified by three states i.e Requested,Accepted and Completed.
 
 ### Prerequisites
 
@@ -31,13 +30,13 @@ psycopg2==2.7.4
 Clone the repository
 
 ```
-git clone https://github.com/Nandan1567/Trip-Control.git
+https://github.com/Pramod0215/Cab-allocation-system/
 ```
 
 Setting up your virtual environment:
 
 ```
-python3 -m venv .evnv
+python3 -m venv .env
 ```
 
 Activating Virtual  Environment
@@ -67,7 +66,7 @@ psql
 ```
 To create a database for our Django project
 ```
-CREATE DATABASE tripcontrol;
+CREATE DATABASE cabride;
 
 ```
 Create a database user which we will use to connect to and interact with the database. Set the password.
@@ -104,7 +103,7 @@ python3 manage.py runserver
 For Frontend which is ReactJS,
 Dependencies are: 
 ```
-"nodejs":"^v13.6.0",
+"nodejs":"^v8.10.0",
 "npm":"^6.13.4",
 "react": "^16.12.0",
 "react-dom": "^16.12.0",
