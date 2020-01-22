@@ -21,7 +21,7 @@ class AddNewUser extends Component {
     })
   }
 
-  
+
   refresh() {
     axios.get("http://127.0.0.1:8000/users/")
       .then(res => {
@@ -45,7 +45,7 @@ class AddNewUser extends Component {
             </Navbar>
         <h1>Add New user </h1>
         <input type='text' onChange={(event) => this.setState({ username: event.target.value })} value={this.state.username} />
-        <button onClick={() => this.addNewUser(this.state.username)}>Add user</button>
+        <button onClick={() => this.addNewUser(this.state.username)}>Add User</button>
         <table >
           <thead>
             <tr className="table-row">
