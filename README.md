@@ -88,13 +88,13 @@ python3 manage.py makemigrations
 
 ## Overall detail
 ```
-Database Name: tripcontrol
-Username: admin
-Password: admin
+Database Name: cabride
+Username: myprojectuser
+Password: pa$$word
 
 ```
 
-Then to run the server, go to the directory '/Trip-Control/tripcontrol' and type the following code in terminal:
+Then to run the server, go to the directory 'tarzen/Cab-allocation-system/cab_allocation_system/' and type the following code in terminal:
 
 ```
 python3 manage.py runserver
