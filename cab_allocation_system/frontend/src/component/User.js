@@ -14,7 +14,7 @@ class User extends Component {
       ride_status: 'rq'
     }
     this.refresh = this.refresh.bind(this);
-    this.getUpdate = this.getUpdate.bind(this);
+    // this.getUpdate = this.getUpdate.bind(this);
     this.createRide = this.createRide.bind(this);
     this.endRide = this.endRide.bind(this);
 
@@ -33,21 +33,21 @@ class User extends Component {
         this.setState({ ride: res.data });
       });
   }
-  getUpdate() {
-    let obj = this;
-    setInterval(function() {
-      axios.get("http://127.0.0.1:8000/rider/")
-      .then(res => {
-        obj.setState({ ride: res.data });
-      }), function() {
-        console.log("Successful");
-      };
-    }, 1000, obj);
-  }
+  // getUpdate() {
+  //   let obj = this;
+  //   setInterval(function() {
+  //     axios.get("http://127.0.0.1:8000/rider/")
+  //     .then(res => {
+  //       obj.setState({ ride: res.data });
+  //     }), function() {
+  //       console.log("Successful");
+  //     };
+  //   }, 1000, obj);
+  // }
 
   componentDidMount() {
     this.refresh();
-    getUpdate() ;
+    // getUpdate() ;
 
   }
 
