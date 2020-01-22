@@ -8,7 +8,6 @@ class User extends Component {
     super(props);
     this.state = {
       user: [],
-      message: '',
       driver: '',
       username: '',
       ride: [],
@@ -41,7 +40,7 @@ class User extends Component {
   createRide(username) {
     const user = this.state.user.filter(item => item.user_name === username)
     if (this.state.ride.filter(items => items.user === username && items.ride_status == "ac").length > 0) {
-      alert("You can't book the cab as you are already on board")
+      alert("You can't book the cab as you are on board")
     } else if (this.state.ride.filter(items => items.user === username && items.ride_status === "rq").length > 0) {
       alert("You have already requested for the cab")
     }
@@ -50,7 +49,7 @@ class User extends Component {
         user: user[0].id,
         ride_status: "rq",
       }).then(res => this.refresh())
-      alert("Thank you for booking the cab. wait for someone is accept your request.")
+      alert("Thank you for booking the cab, your request will be accepted soon...")
     }
   };
 
@@ -81,9 +80,9 @@ class User extends Component {
                     <Nav.Link href=" http://localhost:3000/settings">Setting</Nav.Link>
                 </Nav>
             </Navbar>
-        <h1>User page</h1>
+          <h1> Logged as User:{this.state.username}</h1>
         <p>{this.state.message}</p>
-        <button onClick={() => this.createRide(this.state.username)}>Craete Ride</button>
+        <button onClick={() => this.createRide(this.state.username)}>Book Ride</button>
         <div>
           <select value={this.state.value} onChange={(event) => this.changeUsername(event)}>
             <option value="0">Select user</option>

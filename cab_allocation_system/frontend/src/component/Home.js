@@ -16,7 +16,7 @@ class Home extends Component {
             </Navbar>
                  <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Menu
+                        Login as
   </Dropdown.Toggle>
 
                     <Dropdown.Menu>

@@ -10,6 +10,7 @@ class Driver extends Component {
       drivername: ""
     }
     this.refresh = this.refresh.bind(this);
+    this.getUpdate = this.getUpdate.bind(this);
 
   }
   refresh() {
@@ -21,14 +22,27 @@ class Driver extends Component {
       .then(res => {
         this.setState({ ride: res.data });
       });
-
   }
 
+  getUpdate() {
+    let obj = this;
+    setInterval(function() {
+      axios.get("http://127.0.0.1:8000/rider/")
+      .then(res => {
+        obj.setState({ ride: res.data });
+      }), function() {
+        console.log("Successful");
+      };
+    }, 1000, obj);
+  }
 
 
   componentDidMount() {
     this.refresh();
+    this.getUpdate();
+    console.log("This is component did mount");
   }
+
 
   acceptingCab = (id, drivername) => {
    
