@@ -97,7 +97,8 @@ class RiderViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             print("Except block")
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        requested = RideDetails.objects.filter(user=user).filter(ride_status='re').count()
+        requested = RideDetails.objects.filter(user=user).filter(ride_status='rq').count()
+        print("requested rides are ",requested)
         accepted = RideDetails.objects.filter(user=user).filter(ride_status='ac').count()
         # print("Queryset", len(queryset))
         if requested > 0:
@@ -110,21 +111,20 @@ class RiderViewSet(viewsets.ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk=None):
-        """
-        Listing all the ride update
-        """
         ride = RideDetails.objects.get(id=pk)
-        status = request.data.get('ride_field', None)
-        if status == 'ac' or status == 'dn':
-            #This ensures only valid states are set, invalid states are ignored
-            ride.status = status
-        if status == 'ac':
-            #Driver is set only while accepting the ride and at no other point
+        ride_status = request.data.get('ride_status', None)
+        if ride_status == 'ac' or ride_status == 'dn':
+            # This ensures only valid states are set, invalid states are ignored
+            ride.ride_status = ride_status
+        if ride_status == 'ac':
+            # Driver is set only while accepting the ride and at no other point
             driver_name = request.data.get('driver', None)
             if driver_name is not None:
                 try:
                     driver = Driver.objects.get(driver_name=driver_name)
                     ride.driver = driver
                 except Driver.DoesNotExist:
-                    return Response("Driver doesnot exist", status=status.HTTP_400_BAD_REQUEST)
+                    return Response("Driver does not exist", status=status.HTTP_400_BAD_REQUEST)
         ride.save()
+        serializer = RideUpdateSerializer(ride)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
