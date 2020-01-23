@@ -112,7 +112,7 @@ Dependencies are:
 
 ```
 
-Go to '/Trip-Control/frontend' and type the following code in the terminal:
+Go to '/Cab-allocation-system/frontend' and type the following code in the terminal:
 ```
 "sudo apt install nodejs",
 "node --version",
