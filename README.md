@@ -126,7 +126,7 @@ npm start
 ```
 # images
 ![alt Home Page](https://github.com/Pramod0215/Cab-allocation-system/blob/master/cab_allocation_system/image/Screenshot%20from%202020-01-31%2017-47-26.png)<br>
-![alt User Page](https://github.com/Pramod0215/Catalog-Product-Management/blob/master/image/Screenshot%20from%202020-01-31%2017-17-37.png)<br>
+![alt User Page](https://github.com/Pramod0215/Cab-allocation-system/blob/master/cab_allocation_system/image/Screenshot%20from%202020-01-31%2017-47-41.png)<br>
 ![alt Driver Page](https://github.com/Pramod0215/Catalog-Product-Management/blob/master/image/Screenshot%20from%202020-01-31%2017-21-03.png)<br>
 ![alt setting Page](https://github.com/Pramod0215/Catalog-Product-Management/blob/master/image/Screenshot%20from%202020-01-31%2017-21-08.png)
 
