@@ -30,7 +30,7 @@ psycopg2==2.7.4
 Clone the repository
 
 ```
-https://github.com/Pramod0215/Cab-allocation-system/
+git clone https://github.com/Pramod0215/Cab-allocation-system/
 ```
 
 Setting up your virtual environment:
@@ -47,7 +47,7 @@ source .env/bin/activate
 Once the repository is cloned and virtual environment set up, go to the directory where the requirements.txt(Catalogue-management-system/backend/) is and type the following code in your terminal:
 
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Database setup
@@ -76,7 +76,7 @@ CREATE USER admin WITH PASSWORD 'admin';
 ```
 Now, all we need to do is give our database user access rights to the database we created
 ```
-GRANT ALL PRIVILEGES ON DATABASE tripcontrol TO admin;
+GRANT ALL PRIVILEGES ON DATABASE cabride TO admin;
 
 ```
 Before running server make sure all migrations done. To exucute all migration
@@ -89,7 +89,7 @@ python3 manage.py makemigrations
 ## Overall detail
 ```
 Database Name: cabride
-Username: myprojectuser
+Username: cabride
 Password: pa$$word
 
 ```
